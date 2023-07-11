@@ -1,7 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A multi-purpose personal site built with software I like. Rails and React are foundational. Massively assisted by ChatGPT 4.
 
 Things you may want to cover:
 
