@@ -2,7 +2,7 @@ import React from 'react';
 
 const Frontend = props => (
   <div>
-    <h1> React Frontend Wrapper </h1>
+    <h1> Lion's Paw Games </h1>
   </div>
 );
 

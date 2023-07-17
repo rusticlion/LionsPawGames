@@ -1,3 +1,18 @@
+$cream: #FFF7D4;
+$gold: #FFD95A;
+$umber: #C07F00;
+$ash: #4C3D3D;
+
+body {
+  background-color: $cream;
+  color: $ash;
+}
+
 h1 {
-  color: orange;
+  color: $umber;
+  font-family: 'Libre Baskerville';
+}
+
+p {
+  font-family: 'Inconsolata';
 }
