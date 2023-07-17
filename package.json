@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "14.16.0"
+  },
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
