@@ -1,5 +1,5 @@
 const { environment } = require('@rails/webpacker')
-const sassLoader = require('./loaders/sass')
+const sassLoader = require('./loaders/sass.js')
 
 environment.loaders.prepend('sass', sassLoader)
 
