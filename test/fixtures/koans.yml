@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: koans
+#
+#  id               :bigint           not null, primary key
+#  mumon_commentary :text
+#  source           :string
+#  text             :string
+#  title            :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+
+one:
+  title: MyString
+  source: MyString
+  text: MyString
+
+two:
+  title: MyString
+  source: MyString
+  text: MyString

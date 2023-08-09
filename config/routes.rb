@@ -2,8 +2,6 @@
 #
 
 Rails.application.routes.draw do
-  root to: 'pages#index'
-
   get '/about-me', to: 'aboutme#show'
 
   get '/temple-of-terror', to: 'templeofterror#show'
@@ -13,5 +11,12 @@ Rails.application.routes.draw do
       resources :tests, only: [:index]
     end
     resources :text_blocks, only: [:index, :create, :show, :update, :destroy]
+    get '/gateless-gate/daily', to: 'gatelessgate#daily'
   end
+
+  get '/', to: 'pages#index'
+
+  get '*path', to: 'pages#frontend', constraints: lambda { |req|
+    !req.xhr? && req.format.html?
+  }
 end

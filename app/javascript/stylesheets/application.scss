@@ -3,16 +3,35 @@ $gold: #FFD95A;
 $umber: #C07F00;
 $ash: #4C3D3D;
 
+@font-face {
+  font-family: 'Lionscript-Regular';
+  src: url('../fonts/Lionscript-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background-color: $cream;
   color: $ash;
 }
 
+h1, p {
+  text-align: center;
+}
+
 h1 {
   color: $umber;
-  font-family: 'Libre Baskerville';
+  font-family: 'Lionscript-Regular';
+  font-size: 2.5em;
 }
 
 p {
   font-family: 'Inconsolata';
+}
+
+.mumon-commentary {
+  font-family: 'Lionscript-Regular';
+  color: $umber;
+  font-size: 1.5em;
+  margin: 12px;
 }
