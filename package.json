@@ -1,4 +1,9 @@
 {
+  "name": "lions-paw-games",
+  "version": "0.9.1",
+  "engines": {
+    "node": "16.20.1"
+  },
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
