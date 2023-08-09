@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 const SplashPage = props => {
-  const maxPetals = 100;
-  const batchFrequency = 30000;
 
   useEffect(() => {
+    const numPetals = 100;
     const cherryBlossoms = document.getElementById('cherry-blossoms');
-
-    for (let i = 0; i < maxPetals; i++) {
+    for (let i = 0; i < numPetals; i++) {
       setTimeout(() => {
         const petal = document.createElement('div');
         petal.classList.add('petal');
