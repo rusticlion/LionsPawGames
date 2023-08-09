@@ -20,11 +20,9 @@ const SplashPage = props => {
 
         const animatePetal = () => {
           petal.style.top = parseInt(petal.style.top) + 1 + 'px';
-          petal.style.left = parseInt(petal.style.left) + (Math.random() * 2 - 1) + 'px';
+          petal.style.left = Math.round(parseInt(petal.style.left) + (Math.random() * 2 - 1.5)) + 'px';
 
-          if (parseInt(petal.style.left) < 0) {
-            cherryBlossoms.removeChild(petal);
-          } else if (parseInt(petal.style.top) < endTop) {
+          if (parseInt(petal.style.top) < endTop && parseInt(petal.style.left) >= -5) {
             requestAnimationFrame(animatePetal);
           } else {
             cherryBlossoms.removeChild(petal);
