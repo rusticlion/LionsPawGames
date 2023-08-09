@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
     resources :text_blocks, only: [:index, :create, :show, :update, :destroy]
     get '/gateless-gate/daily', to: 'gatelessgate#daily'
+    get '/gateless-gate/random', to: 'gatelessgate#random'
   end
 
   get '/', to: 'pages#index'

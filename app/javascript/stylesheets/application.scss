@@ -5,7 +5,9 @@ $ash: #4C3D3D;
 
 @font-face {
   font-family: 'Lionscript-Regular';
-  src: url('../fonts/Lionscript-Regular.ttf') format('truetype');
+  src:  url('../fonts/Lionscript-Regular.woff2') format('woff2'),
+        url('../fonts/Lionscript-Regular.woff') format('woff'),
+        url('../fonts/Lionscript-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -43,7 +45,6 @@ p {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: 2;
 }
 
 .petal {
@@ -53,5 +54,13 @@ p {
   height: 20px;
   position: absolute;
   opacity: 0.7;
-  z-index: 2;
+}
+
+.petal-white {
+  background-image: url('../../assets/images/sakura_petal_white.png');
+  background-size: 20px 20px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  opacity: 1;
 }

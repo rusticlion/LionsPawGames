@@ -4,11 +4,19 @@ const SplashPage = props => {
 
   useEffect(() => {
     const numPetals = 100;
+    const whitePetalIndex = Math.floor(Math.random() * numPetals);
     const cherryBlossoms = document.getElementById('cherry-blossoms');
     for (let i = 0; i < numPetals; i++) {
       setTimeout(() => {
         const petal = document.createElement('div');
         petal.classList.add('petal');
+        if (i === whitePetalIndex) {
+          petal.classList.remove('petal');
+          petal.classList.add('petal-white');
+          petal.addEventListener('click', () => {
+            window.location.href = '/gateless-gate';
+          });
+        }
         cherryBlossoms.appendChild(petal);
         
         const startLeft = Math.random() * window.innerWidth;
