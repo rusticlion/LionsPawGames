@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :tests, only: [:index]
     end
     resources :text_blocks, only: [:index, :create, :show, :update, :destroy]
+    resources :zen_gardens, only: [:show, :update]
     get '/gateless-gate/daily', to: 'gatelessgate#daily'
     get '/gateless-gate/random', to: 'gatelessgate#random'
   end

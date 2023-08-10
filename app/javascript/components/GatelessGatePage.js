@@ -26,13 +26,11 @@ const GatelessGatePage = props => {
       <h1>{koan?.title}</h1>
       {
         paragraphs.map(p => {
-          console.log("creating a p element for a koan line")
           return <p>{p}</p>
         })
       }
       {
         mumon_lines.map(line => {
-          console.log("creating a p element for a Mumon line")
           return <p className='mumon-commentary'>{line}</p>
         })
       }
