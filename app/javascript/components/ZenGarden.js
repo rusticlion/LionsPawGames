@@ -1,15 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
+import NavigationOverlay from './NavigationOverlay';
+
 const pixelColors = {
   'STONE': '#8B8B8B', // Grey
   'SAND': '#F4C542',  // Sand color
   'WATER': '#3498DB', // Blue
   'PLANT': '#2ECC71', // Green
-  'VOID': '#FFFFFF',  // White
+  'VOID': '#FFF7D4',  // $Cream
 };
 const size = 240;
 const pixelSize = 1;
+
+const sizeToClass = (size) => {
+  if (size <= 1) return 'extra-small';
+  if (size <= 3) return 'small';
+  if (size <= 5) return 'medium';
+  if (size <= 7) return 'large';
+  return 'extra-large';
+}
 
 const applyRules = (currentGrid) => {
   // Copy the current grid to work on
@@ -136,19 +146,28 @@ const ZenGarden = () => {
 
   return (
     <div>
-      <div className="button-container">
+      <div className='button-container'>
         {/* Palette */}
         {['STONE', 'SAND', 'WATER', 'PLANT', 'VOID'].map((type) => (
-          <button className="pixel-type-button" onClick={() => setSelectedType(type)}>{type}</button>
+          <button
+            className={`pixel-type-button ${type.toLowerCase()} ${selectedType === type ? 'selected' : ''}`}
+            onClick={() => setSelectedType(type)}
+          />
         ))}
       </div>
-      <div>
+      <div className='button-container'>
         {/* Brush Size */}
         {[1, 3, 5, 7, 9].map((size) => (
-          <button className="brush-size-button" onClick={() => setBrushSize(size)}>Size {size}</button>
+          <button 
+            className={`brush-size-button ${sizeToClass(size)} ${brushSize === size ? 'selected' : ''}`} 
+            onClick={() => setBrushSize(size)}
+          >
+            <div className={`brush-size-preview ${sizeToClass(size)} ${selectedType.toLowerCase()}`}/>
+          </button>
         ))}
       </div>
       <canvas
+        id='zen-garden-canvas'
         ref={canvasRef}
         onClick={drawOnGrid}
         width={size * pixelSize} // Adjust the drawing resolution accordingly
@@ -158,6 +177,7 @@ const ZenGarden = () => {
           height: `${size * pixelSize}px` // Adjust the display size accordingly
         }}
       />
+      <NavigationOverlay />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NavigationOverlay from './NavigationOverlay';
 
 const SplashPage = props => {
   const [overlayOpen, setOverlayOpen] = useState(false);
@@ -53,17 +54,7 @@ const SplashPage = props => {
       <p>
         Welcome. Please, feel free to wander.
       </p>
-      <div id="ensou-container">
-        <div id="ensou-icon" onClick={toggleOverlay}></div>
-        <div id="navigation-overlay" className={overlayOpen ? "open" : ""}>
-          <ul>
-            <li><a href="/zen-garden">Zen Garden</a></li>
-            <li><a href="/i-ching">I Ching</a></li>
-            <li><a href="/essays">Essays</a></li>
-          </ul>
-          <div id="close-button" onClick={toggleOverlay}>Close</div>
-        </div>
-      </div>
+      <NavigationOverlay />
     </div>
   )
 };

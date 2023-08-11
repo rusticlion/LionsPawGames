@@ -129,3 +129,102 @@ p {
     cursor: pointer;
   }
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  button {
+    margin: 1em;
+  }
+}
+
+.pixel-type-button {
+  width: 3em;
+  height: 3em;
+  border: 1px solid $ash;
+
+  &.void {
+    background-color: $void;
+  }
+  &.stone {
+    background-color: $stone;
+  }
+  &.sand {
+    background-color: $sand;
+  }
+  &.water {
+    background-color: $water;
+  }
+  &.plant {
+    background-color: $plant;
+  }
+}
+
+.brush-size-button {
+  position: relative;
+  height: 3em;
+  width: 3em; // Default size
+  background-color: $cream;
+  border: 1px solid $ash;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brush-size-preview {
+  display: block;
+  border-radius: 50%;
+  &.void {
+    background-color: $void;
+    border: 1px solid $ash;
+  }
+  &.stone {
+    background-color: $stone;
+  }
+  &.sand {
+    background-color: $sand;
+  }
+  &.water {
+    background-color: $water;
+  }
+  &.plant {
+    background-color: $plant;
+  }
+
+  &.extra-small {
+    width: 3px;
+    height: 3px;
+  }
+  &.small {
+    width: 7px;
+    height: 7px;
+  }
+  &.medium {
+    width: 11px;
+    height: 11px;
+  }
+  &.large {
+    width: 15px;
+    height: 15px;
+  }
+  &.extra-large {
+    width: 19px;
+    height: 19px;
+  }
+}
+.pixel-type-button.selected, .brush-size-button.selected {
+  border: 2px solid $gold;
+  box-shadow: 0 0 5px $gold;
+}
+
+#zen-garden-canvas {
+  display: block;
+  margin: 20px auto;
+  border: 5px solid $ash;
+  border-radius: 10px;
+}
+
+.pixel-type-button, .brush-size-button {
+  border-radius: 2px;
+}
