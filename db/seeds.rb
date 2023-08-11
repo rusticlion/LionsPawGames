@@ -103,6 +103,66 @@ gate_koans = [
     title: "Bullshit",
     text: 'An acolyte asked Ummon, "What is Buddha?"\nUmmon answered, "Bullshit."',
     mumon_commentary: 'Lightning flashes,\nsparks fly.\nYou blinked once\nand missed it.'
+  },
+  {
+    title: "Without Words, Without Silence",
+    text: 'A monk asked Fuketsu: "Without speaking, without silence, how can you express the truth?"\nFuketsu observed: "I always remember springtime in southern China. The birds sing among innumerable kinds of fragrant flowers."',
+    mumon_commentary: 'Without revealing his own penetration,\nHe offered the words of another, not his to give.\nHad he chattered on and on,\nEven his listeners would have been embarrassed.'
+  },
+  {
+    title: "Not Mind, Not Buddha, Not Things",
+    text: 'An acolyte asked Nansen, "Is there a teaching no master has ever preached before?"\nNansen said, "Yes, there is."\n"Well, what is it?" asked the acolyte.\nNansen replied: "It is not mind, it is not Buddha, it is not things."',
+    mumon_commentary: 'Nansen was too kind and lost his treasure.\nTruly, words have no power.\nEven though the mountain becomes the sea,\nWords cannot open another’s mind.'
+  },
+  {
+    title: "Blow Out the Candle",
+    text: 'Tokusan was studying Zen under Master Ryutan. One night, he came to Ryutan with question after question. Eventually the old monk said, "The night is wearing on. Why don’t you retire?"\nSo Tokusan bowed and opened the screen to go out, observing, "It is indeed very dark outside."\nRyutan offered Tokusan a lighted candle to find his way. But just as Tokusan received it - the master blew it out.\nAt that moment, Tokusan glimpsed enlightenment.\n"Do you understand?" asked Ryutan.\n"From now on, I will not doubt you," answered Tokusan.\nThe next day, Ryutan told the monks at his lecture:\n"I see one monk among you. His teeth are like the sword tree, his mouth is like the blood bowl. If you hit him hard with a big stick, he will not so much as blink. Someday he will mount the highest peak, and carry my teaching there."\nLater that day, in front of the lecture hall, Tokusan burned all his scrolls and sutras to ashes. Then he said:\n"However wise the teachings are, compared to the enlightenment I have tasted, they are like a single hair held up against the sky. However profound all the complicated knowledge of this world is, compared to the enlightenment I have tasted, it is like a drop of water to the ocean."\nThen, Tokusan left the monastery.',
+    mumon_commentary: 'A hundred hearings cannot surpass one seeing,\nBut after you see the teacher, that one glance cannot surpass a hundred hearings.\nHis nose was very high\nBut he was blind after all.'
+  },
+  {
+    title: "Not Wind, Not Flag",
+    text: 'Two monks were arguing about a flag.\nOne said, "The flag is moving." The other said, "No, the wind is moving."\nHuineng happened to be passing by, and he told them: "Not the wind. Not the flag. Mind is moving."',
+    mumon_commentary: 'Wind, flag, mind moves\nThe same understanding.\nWhen the mouth opens\nAll are wrong.'
+  },
+  {
+    title: "I Am Buddha",
+    text: 'Daibai asked Baso, "What is Buddha?"\nBaso said, "I am Buddha."',
+    mumon_commentary: 'Under blue sky, in bright sunlight,\nOne need not search around.\nAsking what Buddha is\nIs like hiding loot in one’s pocket and declaring oneself innocent.'
+  },
+  {
+    title: "I Am Not Buddha",
+    text: 'Daibai asked Baso, "What is Buddha?"\nBaso said, "Not me."',
+    mumon_commentary: 'If you meet a swordmaster on the road, meet him with your sword,\nIf you meet a poet on the road, meet him with a poem.\nIf you meet a Buddhist on the road, meet him with half a truth\nAnd never more.'
+  },
+  {
+    title: "Learning Is Not the Path",
+    text: 'Nansen said: "Thought is not Buddha. Learning is not the path."',
+    mumon_commentary: 'When the sky is clear the sun appears,\nWhen the earth is parched rain will fall.\nHe opened his heart fully and spoke out,\nBut it was useless to talk to pigs and fish.'
+  },
+  {
+    title: "Meeting A Master On The Road",
+    text: 'Goso asked:\n"When you meet a Zen master on the road, you cannot talk to him, nor can you remain silent. So what shall you do?"',
+    mumon_commentary: 'When you meet a Zen master on the road,\nFace him neither with words nor silence.\nGive him an uppercut\nAnd you will be called Zen master too.'
+  },
+  {
+    title: "Ummon's Trap",
+    text: 'A Zen acolyte told Ummon, "The brilliance of Buddha illuminates the whole unive-"\nBefore he finished speaking, Ummon interrupted. "You are reciting another’s poem, correct?"\n"Yes," replied the acolyte. "You are sidetracked," Ummon said.\nLater, Master Shishin asked his own pupils: "When did the acolyte get sidetracked?"',
+    mumon_commentary: 'When a fish meets the fishhook\nIf he is too greedy, he will be caught.\nWhen his mouth opens\nHis life already is lost.'
+  },
+  {
+    title: "Shuzan's Staff",
+    text: 'Shuzan held out his short staff and said:\n"If you call this a short staff, you oppose its reality. If you do not call it a short staff, you ignore the fact."\n"Now, what do you wish to call this?"',
+    mumon_commentary: 'Holding out the short staff,\nHe gave an order of life or death.\nPositive and negative interwoven,\nEven Buddhas and emperors cannot escape this attack.'
+  },
+  {
+    title: "Basho's Staff",
+    text: 'Basho said to his disciple:\n"When you have this staff, I will give it to you. When you have no staff, I will take it from you."',
+    mumon_commentary: 'With this staff in my hand\nI can measure the depths and shallows of the world.\nThe staff supports the heavens and makes firm the earth.\nEverywhere it goes the true teaching will be spread.'
+  },
+  {
+    title: "Who Is He?",
+    text: 'Hoen asked:\n"The past and future Buddhas are both his servants. Who is he?"',
+    mumon_commentary: 'Do not fight with another’s bow and arrow.\nDo not ride another’s horse.\nDo not discuss another’s faults.\nDo not interfere with another’s work.'
   }
 ]
 

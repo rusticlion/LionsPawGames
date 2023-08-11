@@ -4,7 +4,7 @@ const GatelessGatePage = props => {
   const [koan, setKoan] = useState(null);
 
   useEffect(() => {
-    fetch('/api/gateless-gate/daily')
+    fetch('/api/gateless-gate/random')
       .then(response => response.json())
       .then(data => setKoan(data))
       .catch(error => console.error("Couldn't fetch a koan from the API"))
@@ -22,18 +22,22 @@ const GatelessGatePage = props => {
     })
   }
   return (
-    <div>
-      <h1>{koan?.title}</h1>
+    <div id="gateless-gate-container">
+      <h1 id="koan-title">{koan?.title}</h1>
+      <div id="koan-text">
       {
         paragraphs.map(p => {
           return <p>{p}</p>
         })
       }
+      </div>
+      <div id="mumon-commentary-container">
       {
         mumon_lines.map(line => {
           return <p className='mumon-commentary'>{line}</p>
         })
-      }
+      } 
+      </div>
     </div>
   )
 };
