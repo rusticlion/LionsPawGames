@@ -31,7 +31,7 @@ const applyRules = (currentGrid) => {
     for (let c = 0; c < size; c++) {
       // Skip this cell if it's already been processed
       if (processed[r][c]) continue;
-
+      const seed = Math.random();
       const cell = currentGrid[r][c];
       const neighbor_n = currentGrid[r-1]?.[c];
       const neighbor_ne = currentGrid[r-1]?.[c+1];
@@ -49,7 +49,7 @@ const applyRules = (currentGrid) => {
         processed[r][c] = true;
       }
       // Rule: If a 'SAND or 'WATER' cell has a 'VOID' cell SE and it still hasn't fallen, swap them
-      else if ((cell === 'SAND' || cell === 'WATER') && (neighbor_se === 'VOID')) {
+      else if ((cell === 'SAND' || cell === 'WATER') && (neighbor_se === 'VOID' && seed > 0.3)) {
         newGrid[r+1][c+1] = cell;
         newGrid[r][c] = 'VOID';
         processed[r+1][c+1] = true;
@@ -62,14 +62,58 @@ const applyRules = (currentGrid) => {
         processed[r+1][c-1] = true;
         processed[r][c] = true;
       }
+      // Rule: If a 'WATER' cell has a 'VOID' cell left and it still hasn't fallen, swap them
+      else if ((cell === 'WATER') && (neighbor_w === 'VOID' && seed > 0.3)) {
+        newGrid[r][c-1] = cell;
+        newGrid[r][c] = 'VOID';
+        processed[r][c-1] = true;
+        processed[r][c] = true;
+      }
+      // Rule: If a 'WATER cell has a 'VOID' cell right and it still hasn't fallen, swap them
+      else if ((cell === 'WATER') && (neighbor_e === 'VOID')) {
+        newGrid[r][c+1] = cell;
+        newGrid[r][c] = 'VOID';
+        processed[r][c+1] = true;
+        processed[r][c] = true;
+      }
+      // Rule: If a 'SAND' cell has a 'WATER' cell below, swap them
+      else if ((cell === 'SAND') && (neighbor_s === 'WATER')) {
+        newGrid[r+1][c] = cell;
+        newGrid[r][c] = 'WATER';
+        processed[r+1][c] = true;
+        processed[r][c] = true;
+      }
+      // Rule: If a 'SAND' cell has a 'WATER' cell SE and it still hasn't fallen, swap them
+      else if ((cell === 'SAND') && (neighbor_se === 'WATER')) {
+        newGrid[r+1][c+1] = cell;
+        newGrid[r][c] = 'WATER';
+        processed[r+1][c+1] = true;
+        processed[r][c] = true;
+      }
+      // Rule: If a 'SAND' cell has a 'WATER' cell SW and it still hasn't fallen, swap them
+      else if ((cell === 'SAND') && (neighbor_sw === 'WATER')) {
+        newGrid[r+1][c-1] = cell;
+        newGrid[r][c] = 'WATER';
+        processed[r+1][c-1] = true;
+        processed[r][c] = true;
+      }
+      
       // Rule: If a 'STONE' cell is next to a 'WATER' cell, change it to 'SAND'
-      if (cell === 'STONE' && (neighbor_n === 'WATER' || neighbor_e === 'WATER' || neighbor_s === 'WATER' || neighbor_w === 'WATER')) {
+      else if (cell === 'STONE' && (neighbor_n === 'WATER' || neighbor_e === 'WATER' || neighbor_s === 'WATER' || neighbor_w === 'WATER')) {
         newGrid[r][c] = 'SAND';
         processed[r][c] = true;
       }
       // Rule: If a 'PLANT' cell is next to a 'WATER' cell, change the 'WATER' cell to 'VOID' and change either NW, N, or NE to 'PLANT'
-      if (cell === 'PLANT' && (neighbor_n === 'WATER' || neighbor_e === 'WATER' || neighbor_s === 'WATER' || neighbor_w === 'WATER')) {
-        newGrid[r-1][c] = 'PLANT';
+      else if (cell === 'PLANT' && (neighbor_n === 'WATER' || neighbor_e === 'WATER' || neighbor_s === 'WATER' || neighbor_w === 'WATER')) {
+        if (seed > .6) {
+          newGrid[r-1][c-1] = 'PLANT';
+        }
+        else if (seed > .5) {
+          newGrid[r-1][c] = 'PLANT';
+        }
+        else {
+          newGrid[r-1][c+1] = 'PLANT';
+        }
       }
     }
   }
@@ -90,7 +134,7 @@ const ZenGarden = () => {
   const [selectedType, setSelectedType] = useState('STONE');
   const [brushSize, setBrushSize] = useState(1);
   const [grid, setGrid] = useState(createEmptyGrid()); // You'll want to define a function to create an empty grid.
-
+  
   useEffect(() => {
     axios.get('/api/zen_gardens/1')
       .then(response => setGrid(response.data.grid))
@@ -144,6 +188,16 @@ const ZenGarden = () => {
       .catch(error => console.error(error));
   };
 
+  const resetGrid = () => {
+    // Resetting the grid to an empty grid
+    const emptyGrid = createEmptyGrid();
+    setGrid(emptyGrid);
+    drawGrid(emptyGrid);
+    // Optionally, you can send the updated grid to the server
+    axios.patch('/api/zen_gardens/1', { zen_garden: { grid: emptyGrid } })
+      .catch(error => console.error(error));
+  };
+
   return (
     <div>
       <div className='button-container'>
@@ -177,6 +231,14 @@ const ZenGarden = () => {
           height: `${size * pixelSize}px` // Adjust the display size accordingly
         }}
       />
+      <div className='button-container'>
+        <button
+          className='reset-button'
+          onClick={resetGrid}
+        >
+          Reset
+        </button>
+      </div>
       <NavigationOverlay />
     </div>
   );
