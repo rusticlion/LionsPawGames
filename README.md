@@ -1,6 +1,6 @@
 # README
 
-A multi-purpose personal site built with software I like. Rails and React are foundational. Massively assisted by ChatGPT 4.
+A multi-purpose personal site built with software I like, primarily Rails and React.
 
 Table of Contents
 
