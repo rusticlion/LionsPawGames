@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import QuoteBoard from './QuoteMeComponents/QuoteBoard'
 import VictoryOverlay from './QuoteMeComponents/VictoryOverlay';
+import NavigationOverlay from './NavigationOverlay';
 
 const QuoteMe = () => {
   const [quote, setQuote] = useState(null);
@@ -200,6 +201,7 @@ const QuoteMe = () => {
         <div>
           <QuoteBoard tokens={shuffledQuote} originalTokens={unshuffledQuote} onTokenClick={handleTokenClick} selectedTokenIndex={selectedTokenIndex} puzzleComplete={puzzleComplete}/>
           {puzzleComplete ? <VictoryOverlay quote={quote} score={score}/> : <div className="score-panel">Score: {score}</div>}
+          <NavigationOverlay/>
         </div>
       )}
     </div>
