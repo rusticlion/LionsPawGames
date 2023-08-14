@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: quote_me_quotes
+#
+#  id          :bigint           not null, primary key
+#  attribution :string
+#  content     :string
+#  context     :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  content: MyString
+  attribution: MyString
+  context: MyString
+
+two:
+  content: MyString
+  attribution: MyString
+  context: MyString

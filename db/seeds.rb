@@ -169,3 +169,23 @@ gate_koans = [
 gate_koans.each do |k|
   Koan.create(title: k[:title], text: k[:text], mumon_commentary: k[:mumon_commentary], source: "The Gateless Gate")
 end
+
+quoteme_quotes = [
+  {
+    content: "I'm here to kick ass and chew bubble gum - and I'm all out of bubble gum!",
+    attribution: 'Roddy Piper as "Nada"',
+    context: "They Live! (1988)"
+  },
+  {
+    content: "Find what you love and let it kill you.",
+    attribution: "Charles Bukowski",
+    context: nil
+  }
+]
+quoteme_quotes.each do |q|
+  QuoteMeQuote.create(
+    content: q[:content],
+    attribution: q[:attribution],
+    context: q[:context]
+  )
+end

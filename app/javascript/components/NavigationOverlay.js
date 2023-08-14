@@ -13,6 +13,7 @@ const NavigationOverlay = () => {
       <div id="navigation-overlay" className={overlayOpen ? "open" : ""}>
         <ul>
           <li><a href="/zen-garden">Zen Garden</a></li>
+          <li><a href="/quote-me">Quote Me</a></li>
           <li><a href="/games">Games</a></li>
           <li><a href="/essays">Essays</a></li>
           <li><a href="/reviews">Reviews</a></li>

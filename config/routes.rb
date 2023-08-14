@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
     resources :text_blocks, only: [:index, :create, :show, :update, :destroy]
     resources :zen_gardens, only: [:show, :update]
+    get '/quotes/daily', to: 'quotemequote#daily'
+    get '/quotes/random', to: 'quotemequote#random'
     get '/gateless-gate/daily', to: 'gatelessgate#daily'
     get '/gateless-gate/random', to: 'gatelessgate#random'
   end
