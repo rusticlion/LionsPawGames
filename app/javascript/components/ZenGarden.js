@@ -202,8 +202,9 @@ const ZenGarden = () => {
     <div>
       <div className='button-container'>
         {/* Palette */}
-        {['STONE', 'SAND', 'WATER', 'PLANT', 'VOID'].map((type) => (
+        {['STONE', 'SAND', 'WATER', 'PLANT', 'VOID'].map((type,i) => (
           <button
+            key={`type-btn-${i}`}
             className={`pixel-type-button ${type.toLowerCase()} ${selectedType === type ? 'selected' : ''}`}
             onClick={() => setSelectedType(type)}
           />
@@ -211,10 +212,11 @@ const ZenGarden = () => {
       </div>
       <div className='button-container'>
         {/* Brush Size */}
-        {[1, 3, 5, 7, 9].map((size) => (
+        {[1, 3, 5, 7, 9].map((size, i) => (
           <button 
             className={`brush-size-button ${sizeToClass(size)} ${brushSize === size ? 'selected' : ''}`} 
             onClick={() => setBrushSize(size)}
+            key={`size-btn-${i}`}
           >
             <div className={`brush-size-preview ${sizeToClass(size)} ${selectedType.toLowerCase()}`}/>
           </button>

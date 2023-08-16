@@ -77,9 +77,10 @@ p {
 }
 
 #ensou-icon {
-  width: 50px;
-  height: 50px;
-  background-color: $ash; // You can replace this with an image or SVG of the ensou
+  width: 70px;
+  height: 70px;
+  background-image: url('../images/ensou.png');
+  background-size: 70px 70px;
   border-radius: 50%;
   position: fixed;
   bottom: 20px;
@@ -142,6 +143,7 @@ p {
 .reset-button {
   font-family: 'Lionscript-Regular';
   font-size: 2em;
+  border-radius: 2px;
   color: $ash;
 }
 

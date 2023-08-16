@@ -4,17 +4,15 @@ const QuoteBoard = ({ tokens, originalTokens, onTokenClick, selectedTokenIndex, 
   if (!tokens || !originalTokens) {
     return <div>Loading...</div>;
   }
-  console.log("Quote board puzzle state:");
-  console.log(puzzleComplete);
   return (
     <div className="quote-board">
       <div className="tiles-container">
         {tokens.map((token, i) => {
-          let tileClass = "tile"; // Basic class
+          let tileClass = "tile";
           let linkingBar = null;
           const behindIsCorrect = i > 0 && token.behind.includes(tokens[i-1].content);
           const aheadIsCorrect = i < tokens.length - 1 && token.ahead.includes(tokens[i+1].content);
-          // Draw linking bar(s)
+          
           linkingBar = (
             <div className={`linking-bar-container ${puzzleComplete ? 'linking-bar-completed' : ''}`}>
               {behindIsCorrect && <div className="linking-bar behind"></div>}

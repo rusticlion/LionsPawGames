@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import NavigationOverlay from './NavigationOverlay';
 
 const GatelessGatePage = props => {
   const [koan, setKoan] = useState(null);
 
   useEffect(() => {
-    fetch('/api/gateless-gate/daily')
+    fetch('/api/gateless-gate/random')
       .then(response => response.json())
       .then(data => setKoan(data))
       .catch(error => console.error("Couldn't fetch a koan from the API"))
@@ -26,18 +27,19 @@ const GatelessGatePage = props => {
       <h1 id="koan-title">{koan?.title}</h1>
       <div id="koan-text">
       {
-        paragraphs.map(p => {
-          return <p>{p}</p>
+        paragraphs.map((p, i) => {
+          return <p key={i}>{p}</p>
         })
       }
       </div>
       <div id="mumon-commentary-container">
       {
-        mumon_lines.map(line => {
-          return <p className='mumon-commentary'>{line}</p>
+        mumon_lines.map((line,i) => {
+          return <p key={i} className='mumon-commentary'>{line}</p>
         })
       } 
       </div>
+      <NavigationOverlay/>
     </div>
   )
 };
