@@ -5,7 +5,7 @@ const Resume = props => {
   return (
     <div id="resume-container">
       <h1>You Should Hire Me</h1>
-      <p className='resume'>I'm an experienced software developer with a focus on complex, compliance-heavy domains (previously healthcare and financial data verification). I first got started as a technologist by developing IRL puzzle game props, and I still have a particular focus on building systems that are intuitive and joyful to use.</p>
+      <p className='resume'>I'm an experienced software developer with a wealth of experience in complex, compliance-heavy domains (specifically, healthcare and financial data verification). I first got started as a technologist by developing IRL puzzle game props, and I still have a particular focus on building systems that are intuitive and joyful to use.</p>
       <p className='resume'>I'm open to work in the gaming space, but also in any other field with a focus on building digital products that customers will love.</p>
       <p className='resume'>Email me at <a href="mailto:leon@lionspawgames.com">leon@lionspawgames.com</a> if you want to chat!</p>
 
