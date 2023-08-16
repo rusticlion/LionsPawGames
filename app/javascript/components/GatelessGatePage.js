@@ -5,7 +5,7 @@ const GatelessGatePage = props => {
   const [koan, setKoan] = useState(null);
 
   useEffect(() => {
-    fetch('/api/gateless-gate/random')
+    fetch('/api/gateless-gate/daily')
       .then(response => response.json())
       .then(data => setKoan(data))
       .catch(error => console.error("Couldn't fetch a koan from the API"))
