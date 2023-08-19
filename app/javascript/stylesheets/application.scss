@@ -339,6 +339,7 @@ p {
 }
 
 #login-form {
+  font-family: 'Inconsolata';
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -361,6 +362,7 @@ p {
 }
 
 #error-message {
+  font-family: 'Inconsolata';
   color: red;
 }
 

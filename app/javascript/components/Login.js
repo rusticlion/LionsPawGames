@@ -26,7 +26,18 @@ const Login = () => {
       })
       .catch(error => {
         // Handle login failure
-        setErrors('Invalid email or password');
+        const errorMessages = error.response?.data;
+        const messages = [];
+
+        if (errorMessages) {
+          for (const key in errorMessages) {
+            const readable_err = humanize(`${key} ${errorMessages[key].join(', ')}`);
+            messages.push(readable_err);
+          }
+        }
+
+        const errorMessage = messages.join('\n');
+        setErrors(errorMessage);
       });
   };
 
