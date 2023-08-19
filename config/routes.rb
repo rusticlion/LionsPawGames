@@ -2,6 +2,13 @@
 #
 
 Rails.application.routes.draw do
+  devise_for :users,
+    controllers: { 
+      registrations: 'registrations',
+      sessions: 'sessions'
+    },
+    defaults: { format: :json }
+  root to: "pages#index"
   get '/about-me', to: 'aboutme#show'
 
   get '/temple-of-terror', to: 'templeofterror#show'
