@@ -11,7 +11,7 @@ const Auth = ({ isAuthenticated }) => {
     // Retrieve the CSRF token from the meta tag at the time of the logout request
     const csrfToken = document.querySelector('[name=csrf-token]').content;
     console.log("Token from meta tag: ", csrfToken);
-    
+
     axios.delete('/users/sign_out', {
       // Include the CSRF token in the headers for this specific request
       headers: {
@@ -35,7 +35,7 @@ const Auth = ({ isAuthenticated }) => {
     );
   } else {
     return (
-      <li><a href="/login">Log In</a></li>
+      <li><a href="/login">Log In/Register</a></li>
     );
   }
 };

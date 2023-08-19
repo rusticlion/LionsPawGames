@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from './axiosConfig';
+import NavigationOverlay from './NavigationOverlay';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +9,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post('/users', {
         user: {
@@ -29,12 +30,15 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-      <input type="password" placeholder="Confirm Password" onChange={e => setPasswordConfirmation(e.target.value)} />
-      <button type="submit">Sign Up</button>
-    </form>
+    <div className="login-container">
+      <form id="login-form" onSubmit={handleSubmit}>
+        <input className="input-field" type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+        <input className="input-field" type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+        <input className="input-field" type="password" placeholder="Confirm Password" onChange={e => setPasswordConfirmation(e.target.value)} />
+        <button type="submit">Sign Up</button>
+      </form>
+      <NavigationOverlay />
+    </div>
   );
 };
 

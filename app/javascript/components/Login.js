@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from './axiosConfig';
 
 import { useAuth } from './AuthContext';
@@ -31,16 +31,18 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="email" onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+    <div className="login-container">
+      <form id="login-form" onSubmit={handleSubmit}>
+        <input className="input-field" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+        <input className="input-field" type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
         <button type="submit">Login</button>
-        {errors && <div>{errors}</div>}
+        {errors && <div id="error-message">{errors}</div>}
       </form>
-      <NavigationOverlay/>
+      <div className="signup-link">
+        <p>Don't have an account? <Link to="/sign-up">Sign Up</Link></p>
+      </div>
+      <NavigationOverlay />
     </div>
-    
   );
 };
 

@@ -331,3 +331,40 @@ p {
   flex-direction: column;
   justify-content: left;
 }
+
+.login-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .input-field {
+    color: $ash;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $umber;
+  }
+
+  button {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: $umber;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+#error-message {
+  color: red;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 10px;
+}
