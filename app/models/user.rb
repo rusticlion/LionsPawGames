@@ -23,6 +23,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one :arena_player
+
   def generate_token
     self.token = SecureRandom.hex
   end

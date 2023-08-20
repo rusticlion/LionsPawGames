@@ -370,3 +370,111 @@ p {
   text-align: center;
   margin-top: 10px;
 }
+
+$primary-color: #0d6efd;
+$background-color: #f5f5f5;
+$affinity-colors: (
+  'SKY': #80c1ff,
+  'EARTH': #755139,
+  'MOUNTAIN': #737373,
+  'MARSH': #549572,
+  'FIRE': #f76c6c,
+  'WATER': #3498db,
+  'WIND': #6ab04c,
+  'THUNDER': #9c27b0
+);
+$affinity-secondary-colors: (
+  'SKY': #d0e5ff,      // Lighter blue
+  'EARTH': #a2845e,    // Soft brown
+  'MOUNTAIN': #a0a0a0, // Light grey
+  'MARSH': #7cb89e,    // Softer green
+  'FIRE': #fba5a5,     // Lighter red
+  'WATER': #5dbbfa,    // Brighter blue
+  'WIND': #99d075,     // Lighter green
+  'THUNDER': #c76dd2   // Soft purple
+);
+
+
+// arena.scss
+.arena-container {
+  background: $background-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    background-color: $primary-color;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 5px 0;
+      font-size: 16px;
+    }
+  }
+}
+
+// affinities.scss
+@each $affinity, $color in $affinity-colors {
+  .affinity-#{$affinity} {
+    color: $color;
+  }
+}
+
+@each $affinity, $color in $affinity-secondary-colors {
+  .affinity-#{$affinity} {
+    background-color: $color;
+  }
+}
+
+.affinity-SKY { color: map-get($affinity-colors, 'SKY'); }
+.affinity-EARTH { color: map-get($affinity-colors, 'EARTH'); }
+.affinity-MOUNTAIN { color: map-get($affinity-colors, 'MOUNTAIN'); }
+.affinity-MARSH { color: map-get($affinity-colors, 'MARSH'); }
+.affinity-FIRE { color: map-get($affinity-colors, 'FIRE'); }
+.affinity-WATER { color: map-get($affinity-colors, 'WATER'); }
+.affinity-WIND { color: map-get($affinity-colors, 'WIND'); }
+.affinity-THUNDER { color: map-get($affinity-colors, 'THUNDER'); }
+
+$body-part-tile-max-width: 700px;
+
+.affinity-MARSH .body-part-tile { background-color: #a8d5ba; }
+.affinity-FIRE .body-part-tile { background-color: #f2a365; }
+// Add more affinities and their complementary colors as needed
+
+.body-part-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.body-part-tile {
+  width: 100%;
+  max-width: $body-part-tile-max-width;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #ccc;
+  margin: 5px;
+  font-size: 1em;
+}

@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     get '/quotes/random', to: 'quotemequote#random'
     get '/gateless-gate/daily', to: 'gatelessgate#daily'
     get '/gateless-gate/random', to: 'gatelessgate#random'
+
+    get '/dreamlands-arena/has-arena-player', to: 'dreamlandsarena#has_arena_player'
+    get '/dreamlands-arena/current-arena-player', to: 'dreamlandsarena#current_arena_player'
+    post '/dreamlands-arena/create-arena-player', to: 'dreamlandsarena#create_arena_player'
   end
 
   get '/', to: 'pages#index'

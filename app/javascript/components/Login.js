@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from './axiosConfig';
 
 import { useAuth } from './AuthContext';
+import { humanize } from './utility';
 
 import NavigationOverlay from './NavigationOverlay';
 
@@ -31,7 +32,8 @@ const Login = () => {
 
         if (errorMessages) {
           for (const key in errorMessages) {
-            const readable_err = humanize(`${key} ${errorMessages[key].join(', ')}`);
+            console.log(errorMessages);
+            const readable_err = humanize(`${key} ${errorMessages[key]}`);
             messages.push(readable_err);
           }
         }
