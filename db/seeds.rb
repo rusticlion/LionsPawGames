@@ -163,6 +163,11 @@ gate_koans = [
     title: "Who Is He?",
     text: 'Hoen asked:\n"The past and future Buddhas are both his servants. Who is he?"',
     mumon_commentary: 'Do not fight with another’s bow and arrow.\nDo not ride another’s horse.\nDo not discuss another’s faults.\nDo not interfere with another’s work.'
+  },
+  {
+    title: "Tipping Over the Water Vase",
+    text: 'Hyakujou wished to send a monk to open a new monastery. He told his acolytes that whoever could answer a Zen question best would be appointed as its master.\nPlacing a water vase on the ground, he asked, "Who can say what this is without calling its name?"\nThe head acolyte said "No one can call it a wooden shoe."\nHyakujou did not respond.\nThen, Isan, the cooking monk, tipped over the vase with his foot, and walked out.\nHyakujou smiled and said, "The head acolyte loses."\nAnd Isan became the master of the new monastery.',
+    mumon_commentary: 'Giving up cooking utensils,\nDefeating the chatterbox,\nThough his teacher sets a barrier for him\nHis feet will tip over everything, even the Buddha.'
   }
 ]
 

@@ -36,6 +36,11 @@ const SplashPage = props => {
           petal.style.top = parseInt(petal.style.top) + 1 + 'px';
           petal.style.left = Math.round(parseInt(petal.style.left) + (Math.random() * 2 - 1.5)) + 'px';
 
+          if (Math.random() < 0.20) { // 20% chance to change rotation on each frame
+            const rotation = (Math.random() * 20 - 10); // Random rotation between -10 and 10 degrees
+            petal.style.transform = `rotate(${rotation}deg)`;
+          }
+
           if (parseInt(petal.style.top) < endTop && parseInt(petal.style.left) >= -5) {
             requestAnimationFrame(animatePetal);
           } else {
