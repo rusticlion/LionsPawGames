@@ -9,7 +9,7 @@ const GamesDirectory = props => {
       <p>Under construction! I am working on two games right now: "Temple of Terror", a HTML5 dungeon-plunderer based on the Forged in the Dark ruleset, and "Into the Dreamlands", a retro RPG for Mac/PC/Linux with an original one-on-one, turn-based, simultaneous resolution combat system.</p>
       <p>For now, check out the <Link to="/zen-garden">interactive Zen Garden sandbox</Link> and the <Link to="/quote-me">daily quote-guessing game</Link>.</p>
       
-      <p>8/19/23 update: try out a tiny, web version of Dreamlands <Link to="/dreamlands-arena">here.</Link></p>
+      {/* <p>8/19/23 update: try out a tiny, web version of Dreamlands <Link to="/dreamlands-arena">here.</Link></p> */}
       <NavigationOverlay/>
     </div>
   )
