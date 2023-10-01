@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_021137) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_21_175157) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,12 +51,39 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_021137) do
     t.text "mumon_commentary"
   end
 
+  create_table "media_items", force: :cascade do |t|
+    t.string "title"
+    t.string "media_type"
+    t.text "description"
+    t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "media_recommendations", force: :cascade do |t|
+    t.bigint "recommender_id", null: false
+    t.bigint "recommended_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recommended_id"], name: "index_media_recommendations_on_recommended_id"
+    t.index ["recommender_id"], name: "index_media_recommendations_on_recommender_id"
+  end
+
   create_table "quote_me_quotes", force: :cascade do |t|
     t.string "content"
     t.string "attribution"
     t.string "context"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "related_items", force: :cascade do |t|
+    t.bigint "media_item_id", null: false
+    t.bigint "related_media_item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_item_id"], name: "index_related_items_on_media_item_id"
+    t.index ["related_media_item_id"], name: "index_related_items_on_related_media_item_id"
   end
 
   create_table "text_blocks", force: :cascade do |t|
@@ -89,4 +116,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_021137) do
   add_foreign_key "arena_player_body_parts", "arena_players"
   add_foreign_key "arena_player_body_parts", "body_parts"
   add_foreign_key "arena_players", "users"
+  add_foreign_key "media_recommendations", "media_items", column: "recommended_id"
+  add_foreign_key "media_recommendations", "media_items", column: "recommender_id"
+  add_foreign_key "related_items", "media_items"
+  add_foreign_key "related_items", "media_items", column: "related_media_item_id"
 end

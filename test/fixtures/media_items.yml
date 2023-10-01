@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: media_items
+#
+#  id          :bigint           not null, primary key
+#  description :text
+#  link        :string
+#  media_type  :string
+#  title       :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  title: MyString
+  media_type: MyString
+  description: MyText
+  link: MyString
+
+two:
+  title: MyString
+  media_type: MyString
+  description: MyText
+  link: MyString

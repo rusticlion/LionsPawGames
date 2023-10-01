@@ -185,7 +185,8 @@ quoteme_quotes = [
     content: "Find what you love and let it kill you.",
     attribution: "Charles Bukowski",
     context: nil
-  }
+  },
+  
 ]
 quoteme_quotes.each do |q|
   QuoteMeQuote.create(

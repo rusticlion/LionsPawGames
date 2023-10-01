@@ -487,3 +487,73 @@ $body-part-tile-max-width: 300px;
     background-color: lighten($primary-border-color, 20%);
   }
 }
+
+.media-catalogue {
+  padding: 20px;
+  background: $ash;
+  border-radius: 10px;
+
+  
+}
+
+// Media Item
+.media-item {
+  background: $cream;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  
+  .title {
+    font-weight: bold;
+    color: $umber;
+  }
+
+  .synopsis,
+  .recommendation {
+    color: $ash;
+  }
+
+  .discussion {
+    color: $ash;
+    display: block;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      background: $gold;
+      margin: 5px;
+      padding: 5px;
+      border-radius: 3px;
+    }
+  }
+}
+
+.show-discussion {
+  cursor: pointer;
+  // Styles for your elegant, minimal icon
+  .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover .icon {
+    transform: rotate(90deg);
+  }
+}
+
+// Style for the "direct-recommendations" and "recommendation-tile" classes
+.direct-recommendations {
+  display: flex;
+  gap: 1em;
+  
+  .recommendation-tile {
+    border: 1px solid $ash;
+    padding: 1em;
+    border-radius: 5px;
+  }
+}

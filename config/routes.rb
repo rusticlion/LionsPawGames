@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/about-me', to: 'aboutme#show'
 
   get '/temple-of-terror', to: 'templeofterror#show'
+  get '/sigilledthrone', to: 'sigiledthrone#show'
 
   namespace :api do
     namespace :v1 do
@@ -19,6 +20,7 @@ Rails.application.routes.draw do
     end
     resources :text_blocks, only: [:index, :create, :show, :update, :destroy]
     resources :zen_gardens, only: [:show, :update]
+    resources :media_items, only: [:show, :index]
     get '/quotes/daily', to: 'quotemequote#daily'
     get '/quotes/random', to: 'quotemequote#random'
     get '/gateless-gate/daily', to: 'gatelessgate#daily'
