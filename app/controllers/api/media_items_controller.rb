@@ -1,6 +1,6 @@
 # app/controllers/media_items_controller.rb
 
-class MediaItemsController < ApplicationController
+class Api::MediaItemsController < ApplicationController
   def show
     @media_item = MediaItem.find(params[:id])
     render json: @media_item
