@@ -29,7 +29,8 @@
     "style-loader": "^3.3.1",
     "turbolinks": "^5.2.0",
     "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "css-loader": "^6.7.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-destructuring": "^7.24.8",
