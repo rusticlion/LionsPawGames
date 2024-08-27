@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: lions_paw_games_production
-  username: lions_paw_games
-  password: <%= ENV["LIONS_PAW_GAMES_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
