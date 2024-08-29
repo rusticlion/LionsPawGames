@@ -11,6 +11,7 @@ import QuoteMe from './QuoteMe';
 import GamesDirectory from './GamesDirectory';
 import Resume from './Resume';
 import MediaCatalogue from './MediaCatalogue';
+import Inducto from './Inducto';
 import MediaItem from './MediaItem';
 import Signup from './Signup';
 import Login from './Login';
@@ -33,6 +34,7 @@ const AppContainer = props => (
         <Route path="/" element={<SplashPage/>} />
         <Route path="/gateless-gate" element={<GatelessGatePage/>} />
         <Route path="/zen-garden" element={<ZenGarden/>} />
+        <Route path="/inducto" element={<Inducto/>} />
         <Route path="/quote-me" element={<QuoteMe />} />
         <Route path="/games" element={<GamesDirectory />} />
         <Route path="/dreamlands-arena" element={<ArenaLandingPage/>} />
