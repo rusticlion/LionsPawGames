@@ -1,7 +1,7 @@
 class Api::GatelessgateController < ApplicationController
   def daily
     @koan = Koan.today_koan
-    try 
+    begin 
       render json: @koan
     rescue => e
       Rails.logger.error("Error fetching daily koan: #{e.message}")
