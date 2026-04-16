@@ -57,7 +57,10 @@ const SplashPage = props => {
     <div>
       <div id="cherry-blossoms"></div>
       <p>
-        Welcome. Have a look around. Enjoy the cherry blossoms.
+        Hello. I'm Leon.
+      </p>
+      <p>
+        I make small games, strange tools, and interactive sketches. Have a look around. Stay as long as you like. Enjoy the cherry blossoms.
       </p>
       <NavigationOverlay />
     </div>

@@ -237,6 +237,25 @@ p {
   border-radius: 10px;
 }
 
+.sigiled-throne-page {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.sigiled-throne-frame {
+  background-color: $ash;
+  border: 4px solid $umber;
+  box-shadow: 0 0 0 2px $gold;
+  line-height: 0;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.sigiled-throne-frame canvas {
+  display: block;
+}
+
 .pixel-type-button, .brush-size-button {
   border-radius: 2px;
 }
