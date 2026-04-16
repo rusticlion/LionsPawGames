@@ -9,7 +9,7 @@
 #
 
 one:
-  grid: 
+  grid: [["VOID"]]
 
 two:
-  grid: 
+  grid: [["VOID"]]

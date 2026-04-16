@@ -20,5 +20,5 @@
 #
 class RelatedItem < ApplicationRecord
   belongs_to :media_item
-  belongs_to :related_media_item
+  belongs_to :related_media_item, class_name: 'MediaItem'
 end

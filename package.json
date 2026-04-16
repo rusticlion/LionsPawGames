@@ -2,7 +2,8 @@
   "name": "lions-paw-games",
   "version": "0.9.1",
   "engines": {
-    "node": "16.20.1"
+    "node": "16.20.1",
+    "yarn": "1.22.22"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
