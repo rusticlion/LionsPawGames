@@ -1,19 +1,29 @@
 import type { ArtifactId, SigilId } from './etching';
+import type { Direction, RoomId, TileCoord } from './gridNavigation';
+import { startingLocation } from './worldRooms';
 
-export type BlockerId = 'sealed-way';
+export type BlockerId = 'sealed-way' | 'tablet-gate';
+
+export const blockerIdValues = ['sealed-way', 'tablet-gate'] as const;
 
 export interface WorldState {
   clearedBlockers: BlockerId[];
   unlockedSigils: SigilId[];
   obtainedArtifacts: ArtifactId[];
   equippedArtifact?: ArtifactId;
+  currentRoomId: RoomId;
+  playerTile: TileCoord;
+  facing: Direction;
 }
 
 export function createInitialWorldState(): WorldState {
   return {
     clearedBlockers: [],
     unlockedSigils: ['life', 'flame', 'stone'],
-    obtainedArtifacts: []
+    obtainedArtifacts: [],
+    currentRoomId: startingLocation.roomId,
+    playerTile: { ...startingLocation.tile },
+    facing: startingLocation.facing
   };
 }
 
@@ -85,5 +95,19 @@ export function cycleEquippedArtifact(state: WorldState): WorldState {
   return {
     ...state,
     equippedArtifact: state.obtainedArtifacts[nextIndex]
+  };
+}
+
+export function setPlayerLocation(
+  state: WorldState,
+  currentRoomId: RoomId,
+  playerTile: TileCoord,
+  facing: Direction
+): WorldState {
+  return {
+    ...state,
+    currentRoomId,
+    playerTile: { ...playerTile },
+    facing
   };
 }

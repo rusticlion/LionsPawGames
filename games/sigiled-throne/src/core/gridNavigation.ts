@@ -1,79 +1,93 @@
 export type Direction = 'up' | 'down' | 'left' | 'right';
+export type RoomId = 'island' | 'throne-antechamber';
+export type ExitId = 'island-to-throne-antechamber' | 'throne-antechamber-to-island';
 
-export type InteractableId =
+export type WorldInteractionId =
   | 'staff-plinth'
   | 'sealed-way'
-  | 'flow-shrine'
-  | 'tablet-plinth';
+  | 'weave-shrine'
+  | 'tablet-plinth'
+  | 'tablet-gate';
+
+export type InspectableId = string;
+export type InteractableId = string;
+
+export const directionValues = ['up', 'down', 'left', 'right'] as const;
+export const roomIdValues = ['island', 'throne-antechamber'] as const;
+export const exitIdValues = [
+  'island-to-throne-antechamber',
+  'throne-antechamber-to-island'
+] as const;
+export const worldInteractionIdValues = [
+  'staff-plinth',
+  'sealed-way',
+  'weave-shrine',
+  'tablet-plinth',
+  'tablet-gate'
+] as const;
+export const builtInInspectableIdValues = [
+  'salt-worn-marker',
+  'throne-inscription'
+] as const;
 
 export interface TileCoord {
   x: number;
   y: number;
 }
 
-export interface GridInteractable {
+interface BaseGridInteractable {
   id: InteractableId;
   label: string;
   tile: TileCoord;
   blocksMovement: boolean;
 }
 
+export interface WorldInteractionInteractable extends BaseGridInteractable {
+  id: WorldInteractionId;
+  type: 'world-interaction';
+}
+
+export interface InspectableInteractable extends BaseGridInteractable {
+  id: InspectableId;
+  type: 'inspectable';
+  text: string[];
+}
+
+export type GridInteractable =
+  | WorldInteractionInteractable
+  | InspectableInteractable;
+
+export interface GridSpawn {
+  id: string;
+  tile: TileCoord;
+  facing: Direction;
+}
+
+export interface GridExit {
+  id: ExitId | string;
+  label: string;
+  tile: TileCoord;
+  toRoomId: RoomId;
+  spawnId: string;
+  facing: Direction;
+}
+
 export interface GridMap {
   width: number;
   height: number;
   blockedTiles: TileCoord[];
+  spawns: GridSpawn[];
   interactables: GridInteractable[];
+  exits: GridExit[];
 }
 
-export const tileSize = 48;
-
-export const placeholderOverworldMap: GridMap = {
-  width: 24,
-  height: 14,
-  blockedTiles: [
-    ...range(0, 24).flatMap((x) => [
-      { x, y: 0 },
-      { x, y: 13 }
-    ]),
-    ...range(1, 13).flatMap((y) => [
-      { x: 0, y },
-      { x: 23, y }
-    ]),
-    ...range(1, 13)
-      .filter((y) => y !== 6)
-      .map((y) => ({ x: 15, y })),
-    { x: 11, y: 4 },
-    { x: 12, y: 4 },
-    { x: 11, y: 9 },
-    { x: 12, y: 9 }
-  ],
-  interactables: [
-    {
-      id: 'staff-plinth',
-      label: 'Staff Plinth',
-      tile: { x: 8, y: 6 },
-      blocksMovement: true
-    },
-    {
-      id: 'sealed-way',
-      label: 'Sealed Way',
-      tile: { x: 15, y: 6 },
-      blocksMovement: true
-    },
-    {
-      id: 'flow-shrine',
-      label: 'Flow Shrine',
-      tile: { x: 19, y: 6 },
-      blocksMovement: true
-    },
-    {
-      id: 'tablet-plinth',
-      label: 'Tablet Plinth',
-      tile: { x: 18, y: 8 },
-      blocksMovement: true
-    }
-  ]
-};
+export const sourceTileSize = 16;
+export const tileRenderScale = 3;
+export const tileSize = sourceTileSize * tileRenderScale;
+export const roomTileWidth = 16;
+export const roomTileHeight = 12;
+export const gameViewportWidth = roomTileWidth * tileSize;
+export const gameViewportHeight = roomTileHeight * tileSize;
 
 export function tileInDirection(tile: TileCoord, direction: Direction): TileCoord {
   switch (direction) {
@@ -114,6 +128,20 @@ export function getInteractableAt(
   return interactables.find((interactable) => tileEquals(interactable.tile, tile));
 }
 
+export function getExitAt(
+  exits: GridExit[],
+  tile: TileCoord
+): GridExit | undefined {
+  return exits.find((exit) => tileEquals(exit.tile, tile));
+}
+
+export function getSpawnById(
+  spawns: GridSpawn[],
+  spawnId: string
+): GridSpawn | undefined {
+  return spawns.find((spawn) => spawn.id === spawnId);
+}
+
 export function canEnterTile(
   map: GridMap,
   tile: TileCoord,
@@ -126,8 +154,4 @@ export function canEnterTile(
   const interactable = getInteractableAt(activeInteractables, tile);
 
   return !interactable?.blocksMovement;
-}
-
-function range(start: number, end: number): number[] {
-  return Array.from({ length: end - start }, (_, index) => start + index);
 }

@@ -5,12 +5,13 @@ import { EtchingScene } from './scenes/EtchingScene';
 import { OverworldScene } from './scenes/OverworldScene';
 import { PreloadScene } from './scenes/PreloadScene';
 import { TitleScene } from './scenes/TitleScene';
+import { gameViewportHeight, gameViewportWidth } from './core/gridNavigation';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'game',
-  width: 960,
-  height: 540,
+  width: gameViewportWidth,
+  height: gameViewportHeight,
   backgroundColor: '#151713',
   pixelArt: true,
   scale: {

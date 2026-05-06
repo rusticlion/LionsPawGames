@@ -7,6 +7,7 @@ import {
   isArtifactObtained,
   isSigilUnlocked,
   obtainArtifact,
+  setPlayerLocation,
   unlockSigil
 } from './worldState';
 
@@ -18,6 +19,9 @@ describe('world state', () => {
     expect(initial.unlockedSigils).toEqual(['life', 'flame', 'stone']);
     expect(initial.obtainedArtifacts).toEqual([]);
     expect(initial.equippedArtifact).toBeUndefined();
+    expect(initial.currentRoomId).toBe('island');
+    expect(initial.playerTile).toEqual({ x: 3, y: 7 });
+    expect(initial.facing).toBe('down');
 
     const cleared = clearBlocker(initial, 'sealed-way');
 
@@ -36,24 +40,24 @@ describe('world state', () => {
   it('unlocks new sigils without mutating the previous state', () => {
     const initial = createInitialWorldState();
 
-    expect(isSigilUnlocked(initial, 'flow')).toBe(false);
+    expect(isSigilUnlocked(initial, 'thread')).toBe(false);
 
-    const withFlow = unlockSigil(initial, 'flow');
+    const withThread = unlockSigil(initial, 'thread');
 
-    expect(isSigilUnlocked(withFlow, 'flow')).toBe(true);
-    expect(isSigilUnlocked(initial, 'flow')).toBe(false);
+    expect(isSigilUnlocked(withThread, 'thread')).toBe(true);
+    expect(isSigilUnlocked(initial, 'thread')).toBe(false);
   });
 
   it('does not duplicate unlocked sigils', () => {
     const initial = createInitialWorldState();
-    const withFlow = unlockSigil(initial, 'flow');
-    const withFlowAgain = unlockSigil(withFlow, 'flow');
+    const withThread = unlockSigil(initial, 'thread');
+    const withThreadAgain = unlockSigil(withThread, 'thread');
 
-    expect(withFlowAgain.unlockedSigils).toEqual([
+    expect(withThreadAgain.unlockedSigils).toEqual([
       'life',
       'flame',
       'stone',
-      'flow'
+      'thread'
     ]);
   });
 
@@ -84,5 +88,20 @@ describe('world state', () => {
 
     expect(cycled.equippedArtifact).toBe('staff');
     expect(cycleEquippedArtifact(cycled).equippedArtifact).toBe('tablet');
+  });
+
+  it('tracks player location without mutating the previous state', () => {
+    const initial = createInitialWorldState();
+    const moved = setPlayerLocation(
+      initial,
+      'throne-antechamber',
+      { x: 2, y: 5 },
+      'right'
+    );
+
+    expect(moved.currentRoomId).toBe('throne-antechamber');
+    expect(moved.playerTile).toEqual({ x: 2, y: 5 });
+    expect(moved.facing).toBe('right');
+    expect(initial.currentRoomId).toBe('island');
   });
 });

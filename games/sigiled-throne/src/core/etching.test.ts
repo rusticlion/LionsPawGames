@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { staffArtifact } from './artifacts';
+import { staffArtifact, tabletArtifact } from './artifacts';
 import {
   applySigil,
   createBlankEtching,
+  getAdjacentNodeIds,
+  getThreadEdges,
   nodeHasAtLeastMp,
   resetEtching,
   totalMp
@@ -128,74 +130,95 @@ describe('etching core', () => {
     expect(withFlame.state.nodes['staff-1'].locked).toBe(true);
   });
 
-  it('equalizes Flow MP with remainder favoring the Flow node', () => {
-    const blank = createBlankEtching(staffArtifact);
-    blank.nodes['staff-1'].mp = 0;
-    blank.nodes['staff-2'].mp = 1;
-    blank.nodes['staff-3'].mp = 3;
-
-    const result = applySigil(staffArtifact, blank, {
-      nodeId: 'staff-2',
-      sigil: 'flow'
+  it('sparks and connects Thread sigils in placement order', () => {
+    const first = applySigil(staffArtifact, createBlankEtching(staffArtifact), {
+      nodeId: 'staff-0',
+      sigil: 'thread'
     });
 
-    expect(result.ok).toBe(true);
+    expect(first.ok).toBe(true);
 
-    if (!result.ok) {
+    if (!first.ok) {
       return;
     }
 
-    expect(result.state.nodes['staff-1'].mp).toBe(1);
-    expect(result.state.nodes['staff-2'].mp).toBe(2);
-    expect(result.state.nodes['staff-3'].mp).toBe(1);
-  });
-
-  it('excludes locked adjacent nodes from Flow equalization', () => {
-    const blank = createBlankEtching(staffArtifact);
-    blank.nodes['staff-1'].mp = 4;
-    blank.nodes['staff-1'].locked = true;
-    blank.nodes['staff-2'].mp = 1;
-    blank.nodes['staff-3'].mp = 3;
-
-    const result = applySigil(staffArtifact, blank, {
-      nodeId: 'staff-2',
-      sigil: 'flow'
-    });
-
-    expect(result.ok).toBe(true);
-
-    if (!result.ok) {
-      return;
-    }
-
-    expect(result.state.nodes['staff-1'].mp).toBe(4);
-    expect(result.state.nodes['staff-2'].mp).toBe(2);
-    expect(result.state.nodes['staff-3'].mp).toBe(2);
-  });
-
-  it('re-equalizes existing Flow sigils after later placements', () => {
-    const withFlow = applySigil(staffArtifact, createBlankEtching(staffArtifact), {
-      nodeId: 'staff-2',
-      sigil: 'flow'
-    });
-
-    expect(withFlow.ok).toBe(true);
-
-    if (!withFlow.ok) {
-      return;
-    }
-
-    const charged = { ...withFlow.state };
-    charged.nodes = {
-      ...charged.nodes,
-      'staff-1': { ...charged.nodes['staff-1'], mp: 0 },
-      'staff-2': { ...charged.nodes['staff-2'], mp: 3 },
-      'staff-3': { ...charged.nodes['staff-3'], mp: 0 }
-    };
-
-    const result = applySigil(staffArtifact, charged, {
+    const second = applySigil(staffArtifact, first.state, {
       nodeId: 'staff-4',
-      sigil: 'life'
+      sigil: 'thread'
+    });
+
+    expect(second.ok).toBe(true);
+
+    if (!second.ok) {
+      return;
+    }
+
+    expect(second.state.nodes['staff-0'].mp).toBe(2);
+    expect(second.state.nodes['staff-4'].mp).toBe(1);
+    expect(getThreadEdges(second.state)).toEqual([['staff-0', 'staff-4']]);
+    expect(getAdjacentNodeIds(staffArtifact, 'staff-0', second.state)).toEqual([
+      'staff-1',
+      'staff-4'
+    ]);
+  });
+
+  it('diffuses MP into lower-value neighbors and leaves indivisible surplus', () => {
+    const blank = createBlankEtching(tabletArtifact);
+    blank.nodes['tablet-1'].mp = 7;
+    blank.nodes['tablet-0'].mp = 0;
+    blank.nodes['tablet-2'].mp = 1;
+    blank.nodes['tablet-4'].mp = 3;
+
+    const result = applySigil(tabletArtifact, blank, {
+      nodeId: 'tablet-1',
+      sigil: 'diffuse'
+    });
+
+    expect(result.ok).toBe(true);
+
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.state.nodes['tablet-0'].mp).toBe(3);
+    expect(result.state.nodes['tablet-2'].mp).toBe(3);
+    expect(result.state.nodes['tablet-4'].mp).toBe(3);
+    expect(result.state.nodes['tablet-1'].mp).toBe(2);
+  });
+
+  it('keeps sealed neighbors out of Diffuse redistribution', () => {
+    const blank = createBlankEtching(tabletArtifact);
+    blank.nodes['tablet-1'].mp = 5;
+    blank.nodes['tablet-0'].mp = 0;
+    blank.nodes['tablet-2'].mp = 0;
+    blank.nodes['tablet-2'].locked = true;
+    blank.nodes['tablet-4'].mp = 2;
+
+    const result = applySigil(tabletArtifact, blank, {
+      nodeId: 'tablet-1',
+      sigil: 'diffuse'
+    });
+
+    expect(result.ok).toBe(true);
+
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.state.nodes['tablet-0'].mp).toBe(3);
+    expect(result.state.nodes['tablet-2'].mp).toBe(0);
+    expect(result.state.nodes['tablet-4'].mp).toBe(3);
+    expect(result.state.nodes['tablet-1'].mp).toBe(1);
+  });
+
+  it('pulls MP inward with Well', () => {
+    const blank = createBlankEtching(staffArtifact);
+    blank.nodes['staff-1'].mp = 2;
+    blank.nodes['staff-3'].mp = 1;
+
+    const result = applySigil(staffArtifact, blank, {
+      nodeId: 'staff-2',
+      sigil: 'well'
     });
 
     expect(result.ok).toBe(true);
@@ -206,7 +229,7 @@ describe('etching core', () => {
 
     expect(result.state.nodes['staff-1'].mp).toBe(1);
     expect(result.state.nodes['staff-2'].mp).toBe(2);
-    expect(result.state.nodes['staff-3'].mp).toBe(1);
+    expect(result.state.nodes['staff-3'].mp).toBe(0);
   });
 
   it('rejects occupied nodes without changing state', () => {

@@ -1,6 +1,22 @@
 export type ArtifactId = 'staff' | 'tablet';
 export type NodeId = string;
-export type SigilId = 'life' | 'flame' | 'stone' | 'flow';
+export type SigilId =
+  | 'life'
+  | 'flame'
+  | 'stone'
+  | 'thread'
+  | 'diffuse'
+  | 'well';
+
+export const artifactIdValues = ['staff', 'tablet'] as const;
+export const sigilIdValues = [
+  'life',
+  'flame',
+  'stone',
+  'thread',
+  'diffuse',
+  'well'
+] as const;
 
 export type PlacementFailureReason =
   | 'node-not-found'
@@ -99,11 +115,17 @@ export function applySigil(
     case 'stone':
       nextState.nodes[placement.nodeId].locked = true;
       break;
-    case 'flow':
+    case 'thread':
+      applyThread(nextState, placement.nodeId);
+      break;
+    case 'diffuse':
+      applyDiffuse(artifact, nextState, placement.nodeId);
+      break;
+    case 'well':
+      applyWell(artifact, nextState, placement.nodeId);
       break;
   }
 
-  applyFlowSigils(artifact, nextState);
   nextState.placements.push(placement);
 
   return { ok: true, state: nextState };
@@ -111,11 +133,12 @@ export function applySigil(
 
 export function getAdjacentNodeIds(
   artifact: ArtifactDefinition,
-  nodeId: NodeId
+  nodeId: NodeId,
+  state?: EtchingState
 ): NodeId[] {
   const adjacent = new Set<NodeId>();
 
-  for (const [a, b] of artifact.edges) {
+  for (const [a, b] of getEffectiveEdges(artifact, state)) {
     if (a === nodeId) {
       adjacent.add(b);
     }
@@ -128,6 +151,45 @@ export function getAdjacentNodeIds(
   return artifact.nodes
     .map((node) => node.id)
     .filter((id) => adjacent.has(id));
+}
+
+export function getEffectiveEdges(
+  artifact: ArtifactDefinition,
+  state?: EtchingState
+): Array<readonly [NodeId, NodeId]> {
+  if (!state) {
+    return [...artifact.edges];
+  }
+
+  const nodeIds = new Set(artifact.nodes.map((node) => node.id));
+
+  return [
+    ...artifact.edges,
+    ...getThreadEdges(state).filter(
+      ([a, b]) => nodeIds.has(a) && nodeIds.has(b)
+    )
+  ];
+}
+
+export function getThreadEdges(
+  state: EtchingState
+): Array<readonly [NodeId, NodeId]> {
+  const edges: Array<readonly [NodeId, NodeId]> = [];
+  let previousThreadNodeId: NodeId | undefined;
+
+  for (const placement of state.placements) {
+    if (placement.sigil !== 'thread') {
+      continue;
+    }
+
+    if (previousThreadNodeId) {
+      edges.push([previousThreadNodeId, placement.nodeId]);
+    }
+
+    previousThreadNodeId = placement.nodeId;
+  }
+
+  return edges;
 }
 
 export function nodeHasAtLeastMp(
@@ -147,7 +209,7 @@ function applyLife(
   state: EtchingState,
   nodeId: NodeId
 ): void {
-  for (const adjacentId of getAdjacentNodeIds(artifact, nodeId)) {
+  for (const adjacentId of getAdjacentNodeIds(artifact, nodeId, state)) {
     addMp(state, adjacentId, 1);
   }
 }
@@ -160,38 +222,138 @@ function applyFlame(
   const currentMp = state.nodes[nodeId].mp;
   addMp(state, nodeId, currentMp);
 
-  for (const adjacentId of getAdjacentNodeIds(artifact, nodeId)) {
+  for (const adjacentId of getAdjacentNodeIds(artifact, nodeId, state)) {
     addMp(state, adjacentId, -1);
   }
 }
 
-function applyFlow(
+function applyThread(state: EtchingState, nodeId: NodeId): void {
+  addMp(state, nodeId, 1);
+
+  const previousThreadNodeId = findPreviousThreadNodeId(state);
+
+  if (previousThreadNodeId) {
+    addMp(state, previousThreadNodeId, 1);
+  }
+}
+
+function applyDiffuse(
   artifact: ArtifactDefinition,
   state: EtchingState,
   nodeId: NodeId
 ): void {
-  const flowGroup = [nodeId, ...getAdjacentNodeIds(artifact, nodeId)].filter(
-    (id) => !state.nodes[id].locked
-  );
-  const total = flowGroup.reduce((sum, id) => sum + state.nodes[id].mp, 0);
-  const baseMp = Math.floor(total / flowGroup.length);
-  let remainder = total % flowGroup.length;
+  const source = state.nodes[nodeId];
 
-  for (const id of flowGroup) {
-    state.nodes[id].mp = baseMp + (remainder > 0 ? 1 : 0);
-    remainder = Math.max(0, remainder - 1);
+  if (!source || source.locked || source.mp <= 0) {
+    return;
+  }
+
+  const artifactOrder = artifactNodeOrder(artifact);
+  const recipients = getAdjacentNodeIds(artifact, nodeId, state)
+    .filter((id) => !state.nodes[id].locked)
+    .map((id) => ({
+      id,
+      mp: state.nodes[id].mp
+    }))
+    .sort(
+      (a, b) =>
+        a.mp - b.mp || (artifactOrder.get(a.id) ?? 0) - (artifactOrder.get(b.id) ?? 0)
+    );
+
+  if (recipients.length === 0) {
+    return;
+  }
+
+  let remainingMp = source.mp;
+  let currentLevel = recipients[0].mp;
+  let recipientCount = recipients.filter(
+    (recipient) => recipient.mp === currentLevel
+  ).length;
+
+  while (remainingMp > 0) {
+    const nextLevel =
+      recipientCount < recipients.length ? recipients[recipientCount].mp : undefined;
+
+    if (nextLevel !== undefined) {
+      const costToNextLevel = (nextLevel - currentLevel) * recipientCount;
+
+      if (costToNextLevel <= remainingMp) {
+        for (let index = 0; index < recipientCount; index += 1) {
+          recipients[index].mp = nextLevel;
+        }
+
+        remainingMp -= costToNextLevel;
+        currentLevel = nextLevel;
+
+        while (
+          recipientCount < recipients.length &&
+          recipients[recipientCount].mp === currentLevel
+        ) {
+          recipientCount += 1;
+        }
+
+        continue;
+      }
+    }
+
+    const evenIncrement = Math.floor(remainingMp / recipientCount);
+
+    if (evenIncrement <= 0) {
+      break;
+    }
+
+    for (let index = 0; index < recipientCount; index += 1) {
+      recipients[index].mp += evenIncrement;
+    }
+
+    remainingMp -= evenIncrement * recipientCount;
+    break;
+  }
+
+  source.mp = remainingMp;
+
+  for (const recipient of recipients) {
+    state.nodes[recipient.id].mp = recipient.mp;
   }
 }
 
-function applyFlowSigils(
+function applyWell(
   artifact: ArtifactDefinition,
-  state: EtchingState
+  state: EtchingState,
+  nodeId: NodeId
 ): void {
-  for (const node of artifact.nodes) {
-    if (state.nodes[node.id].sigil === 'flow') {
-      applyFlow(artifact, state, node.id);
+  const target = state.nodes[nodeId];
+
+  if (!target || target.locked) {
+    return;
+  }
+
+  for (const adjacentId of getAdjacentNodeIds(artifact, nodeId, state)) {
+    const adjacent = state.nodes[adjacentId];
+
+    if (!adjacent || adjacent.locked || adjacent.mp <= 0) {
+      continue;
+    }
+
+    adjacent.mp -= 1;
+    addMp(state, nodeId, 1);
+  }
+}
+
+function findPreviousThreadNodeId(state: EtchingState): NodeId | undefined {
+  for (let index = state.placements.length - 1; index >= 0; index -= 1) {
+    const placement = state.placements[index];
+
+    if (placement.sigil === 'thread') {
+      return placement.nodeId;
     }
   }
+
+  return undefined;
+}
+
+function artifactNodeOrder(artifact: ArtifactDefinition): Map<NodeId, number> {
+  return new Map(artifact.nodes.map((node, index) => [node.id, index]));
 }
 
 function addMp(state: EtchingState, nodeId: NodeId, delta: number): void {
@@ -223,6 +385,8 @@ function isSupportedSigil(sigil: string): sigil is SigilId {
     sigil === 'life' ||
     sigil === 'flame' ||
     sigil === 'stone' ||
-    sigil === 'flow'
+    sigil === 'thread' ||
+    sigil === 'diffuse' ||
+    sigil === 'well'
   );
 }
